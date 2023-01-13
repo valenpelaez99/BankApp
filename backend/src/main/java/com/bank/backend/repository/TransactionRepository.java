@@ -1,12 +1,12 @@
-package com.bank.repository;
+package com.bank.backend.repository;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.bank.entity.Account;
-import com.bank.entity.Transaction;
+import com.bank.backend.entity.Account;
+import com.bank.backend.entity.Transaction;
 
 
 @Repository

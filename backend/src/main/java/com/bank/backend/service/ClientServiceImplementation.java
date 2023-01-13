@@ -1,4 +1,4 @@
-package com.bank.service;
+package com.bank.backend.service;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -8,10 +8,10 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bank.entity.Account;
-import com.bank.entity.Client;
-import com.bank.repository.AccountRepository;
-import com.bank.repository.ClientRepository;
+import com.bank.backend.entity.Account;
+import com.bank.backend.entity.Client;
+import com.bank.backend.repository.AccountRepository;
+import com.bank.backend.repository.ClientRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 

@@ -1,11 +1,11 @@
-package com.bank.service;
+package com.bank.backend.service;
 
 
 
 import java.util.List;
 
-import com.bank.entity.Account;
-import com.bank.entity.Transaction;
+import com.bank.backend.entity.Account;
+import com.bank.backend.entity.Transaction;
 
 
 public interface TransactionService {

@@ -1,4 +1,4 @@
-package com.bank.controller;
+package com.bank.backend.controller;
 
 
 
@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bank.entity.Client;
-import com.bank.service.ClientService;
+import com.bank.backend.entity.Client;
+import com.bank.backend.service.ClientService;
 
 
 @RestController

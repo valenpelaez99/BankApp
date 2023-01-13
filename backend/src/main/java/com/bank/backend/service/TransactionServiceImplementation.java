@@ -1,4 +1,4 @@
-package com.bank.service;
+package com.bank.backend.service;
 
 
 
@@ -8,10 +8,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bank.entity.Account;
-import com.bank.entity.Transaction;
-import com.bank.repository.AccountRepository;
-import com.bank.repository.TransactionRepository;
+import com.bank.backend.entity.Account;
+import com.bank.backend.entity.Transaction;
+import com.bank.backend.repository.AccountRepository;
+import com.bank.backend.repository.TransactionRepository;
 
 
 

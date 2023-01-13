@@ -1,4 +1,4 @@
-package com.bank.service;
+package com.bank.backend.service;
 
 public class FinantialMovements {
 	
