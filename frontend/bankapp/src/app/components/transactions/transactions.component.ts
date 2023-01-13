@@ -11,7 +11,7 @@ import { TransactionService } from 'src/app/services/transaction.service';
   templateUrl: './transactions.component.html',
   styleUrls: ['./transactions.component.css']
 })
-export class AccountTransactionsComponent implements OnInit{
+export class TransactionsComponent implements OnInit{
 
   public transactions: Transaction[] = [];
 

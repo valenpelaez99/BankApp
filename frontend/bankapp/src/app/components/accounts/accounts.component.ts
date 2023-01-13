@@ -13,7 +13,7 @@ import { TransactionService } from 'src/app/services/transaction.service';
   templateUrl: './accounts.component.html',
   styleUrls: ['./accounts.component.css']
 })
-export class ClientAccountsComponent implements OnInit{
+export class AccountsComponent implements OnInit{
 
   public accounts: Account[] = [];
 
