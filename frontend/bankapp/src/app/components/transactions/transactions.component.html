@@ -1,1 +1,32 @@
-<p>transactions works!</p>
+<app-header></app-header>
+
+    <div id="main-container" class="example-nutton-row" style="margin: 20px;">
+        <div style="margin-top: 10px;">
+           <p-table [value]="transactions" [tableStyle]="{'min-width': '50rem'}">
+              <ng-template pTemplate="header">
+                  <tr>
+                      <th>Movement Date</th>
+                      <th>Transaction Type</th>
+                      <th>Description</th>
+                      <th>Value</th>
+                      <th>Movement Type</th>
+                      <th>Balance</th>
+                      <th>Available Balance</th>
+
+                      <th></th>
+                  </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-transaction>
+                  <tr>
+                      <td>{{transaction.movementDate}}</td>
+                      <td>{{transaction.transactionType}}</td>
+                      <td>{{transaction.description}}</td>
+                      <td>{{transaction.value}}</td>
+                      <td>{{transaction.movementType}}</td>
+                      <td>{{transaction.balance}}</td>
+                      <td>{{transaction.availableBalance}}</td>
+                  </tr>
+              </ng-template>
+            </p-table>
+        </div>
+     </div>

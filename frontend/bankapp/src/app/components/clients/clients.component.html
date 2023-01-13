@@ -1,1 +1,152 @@
-<p>clients works!</p>
+<app-header></app-header>
+
+<div id="main-container" class="example-nutton-row" style="margin: 20px;">
+   <button mat-raised-button color="primary" (click)="onOpenModal('add')">Create Client</button>
+   <div style="margin-top: 10px;">
+      <p-table [value]="clients" [tableStyle]="{'min-width': '50rem'}">
+         <ng-template pTemplate="header">
+             <tr>
+                 <th>Name</th>
+                 <th>Last Name</th>
+                 <th>Id Type</th>
+                 <th>Id Number</th>
+                 <th>Email</th>
+                 <th></th>
+             </tr>
+         </ng-template>
+         <ng-template pTemplate="body" let-client>
+             <tr>
+                 <td>{{client.name}}</td>
+                 <td>{{client.lastName}}</td>
+                 <td>{{client.identificationType}}</td>
+                 <td>{{client.identificationNumber}}</td>
+                 <td>{{client.email}}</td>
+                 <td>
+                   <span class="p-buttonset">
+                     <button pButton (click)="onOpenModal('edit', client)" pRipple label="Detail" icon="pi pi-info-circle"></button>
+                     <button pButton routerLink = "/accounts/{{client.idClient}}" pRipple label="Products" icon="pi pi-credit-card"></button>
+                     <button pButton (click)="onOpenModal('delete', client )" pRipple label="Delete" icon="pi pi-trash"></button>
+                 </span>
+                 </td>
+             </tr>
+         </ng-template>
+       </p-table>
+   </div>
+</div>
+
+<div class="modal fade" id="addClientModal" tabindex="-1" role="dialog" aria-labelledby="addClientModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+          <h5 class="modal-title" id="addClientModalLabel">Create New Client</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+       </div>
+       <div class="modal-body">
+          <form #addForm="ngForm" (ngSubmit)="onAddClient(addForm)">
+          <div class="form-group">
+             <label for="name">Name</label>
+             <input type="text" ngModel name="name" pattern="[a-zA-Z0-9.-_]{2,}" class="form-control" id="name" placeholder="Name" required>
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" ngModel name="lastName" pattern="[a-zA-Z0-9.-_]{2,}" class="form-control" id="lastName" placeholder="Last Name" required>
+          </div>
+          <div class="form-group">
+            <label for="birthDate">Birth Date</label>
+            <input type="date" ngModel name="birthDate" class="form-control" id="birthDate" required>
+          </div>
+          <div class="form-group">
+            <label for="identificationType">Identification Type</label>
+            <div class="radio-bottoms">
+              <input type="radio" ngModel name="identificationType" value="CC" class="boxes-margin" id="identificationType" required>CC
+              <input type="radio" ngModel name="identificationType" value="CE" class="boxes-margin" id="identificationType" required>CE
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="identificationNumber">Identification Number</label>
+            <input type="text" ngModel name="identificationNumber" pattern="[a-zA-Z0-9.-_]{2,}" class="form-control" id="identificationNumber" placeholder="Id Number" required>
+          </div>
+          <div class="form-group">
+             <label for="email">Email</label>
+             <input type="email" ngModel name="email" class="form-control" id="email" pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z.-_]{2,}" placeholder="Email" required>
+          </div>
+          <div class="modal-footer">
+             <button pButton type="button" label="Cancel" class="p-button-danger" id="add-client-form" data-dismiss="modal"></button>
+             <button pButton type="submit" label="Save" class="p-button-success" [disabled]="addForm.invalid"></button>
+          </div>
+          </form>
+       </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="updateClientModal" tabindex="-1" role="dialog" aria-labelledby="clientEditModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+     <div class="modal-content">
+        <div class="modal-header">
+           <h5 class="modal-title" id="updateClientModalLabel">Update Client</h5>
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+           </button>
+        </div>
+        <div class="modal-body">
+           <form #editForm="ngForm">
+              <div class="form-group">
+                 <label for="name">Name</label>
+                 <input type="text" ngModel="{{updateClient?.name}}" name="name" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Name">
+              </div>
+              <input type="hidden" ngModel="{{updateClient?.idClient}}" name="idClient" class="form-control" id="idClient" placeholder="Email">
+              <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" ngModel="{{updateClient?.lastName}}" name="lastName" pattern="[a-zA-Z0-9.-_]{2,}" class="form-control" id="lastName" placeholder="last Name" required>
+              </div>
+              <div class="form-group">
+               <label for="birthDate">Birth Date</label>
+               <input type="date" ngModel="{{updateClient?.birthDate}}" name="birthDate" class="form-control" id="birthDate" required>
+             </div>
+              <div class="form-group">
+                <label for="identificationType">Identification Type</label>
+                <div class="radio-bottoms">
+                  <input type="radio" ngModel="{{updateClient?.identificationType}}" name="identificationType" value="CC" class="boxes-margin" id="identificationType" required>CC
+                  <input type="radio" ngModel name="identificationType" value="CE" class="boxes-margin" id="identificationType" required>CE
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="identificationNumber">Identification Number</label>
+                <input type="text" ngModel="{{updateClient?.identificationNumber}}" name="identificationNumber" pattern="[a-zA-Z0-9.-_]{2,}" class="form-control" id="identificationNumber" placeholder="Id Number" required>
+              </div>
+              <div class="form-group">
+                 <label for="email">Email</label>
+                 <input type="email" ngModel="{{updateClient?.email}}" name="email" class="form-control" id="email" placeholder="Email">
+              </div>
+              <div class="modal-footer">
+                 <button pButton type="button" label="Close" class="p-button-danger" id="" data-dismiss="modal"></button>
+                 <button (click)="onUpdateClient(editForm.value)" data-dismiss="modal" pButton type="button" label="Save" class="p-button-success"></button>
+              </div>
+           </form>
+        </div>
+     </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteClientModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+     <div class="modal-content">
+        <div class="modal-header">
+           <h5 class="modal-title" id="deleteModelLabel">Delete Client</h5>
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+           </button>
+        </div>
+        <div class="modal-body">
+           <p>Are you sure you want to delete client {{deleteClient?.name}} {{deleteClient?.lastName}}?</p>
+           <div class="modal-footer">
+              <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text" data-dismiss="modal"></button>
+              <button (click)="onDeleteClient(deleteClient!.idClient)" pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded p-button-text" data-dismiss="modal"></button>
+           </div>
+        </div>
+     </div>
+  </div>
+</div>

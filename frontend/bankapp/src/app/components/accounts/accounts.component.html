@@ -1,1 +1,220 @@
-<p>accounts works!</p>
+<app-header></app-header>
+
+<div id="main-container" class="example-nutton-row" style="margin: 20px;">
+    <button mat-raised-button color="primary" (click)="onOpenModal('add')">Create Account</button>
+    <div style="margin-top: 10px;">
+       <p-table [value]="accounts" [tableStyle]="{'min-width': '50rem'}">
+          <ng-template pTemplate="header">
+              <tr>
+                  <th>Account Number</th>
+                  <th>Account Type</th>
+                  <th>Status</th>
+                  <th>Balance</th>
+                  <th>Available Balance</th>
+                  <th></th>
+                  <th>Transactions</th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-account>
+              <tr>
+                  <td>{{account.accountNumber}}</td>
+                  <td>{{account.accountType}}</td>
+                  <td>{{account.accountStatus}}</td>
+                  <td>{{account.balance}}</td>
+                  <td>{{account.availableBalance}}</td>
+                  <td>
+                    <span class="p-buttonset">
+                      <button pButton (click)="onOpenModal('edit', account)" pRipple label="Detail" icon="pi pi-info-circle"></button>
+                      <button pButton routerLink = "/transactions/{{account.idAccount}}" pRipple label="Movements" icon="pi pi-list"></button>
+                    </span>
+                  </td>
+                  <td>
+                    <span class="p-buttonset">
+                      <button pButton (click)="onOpenModal('transfer', account)" pRipple label="Transfer" icon="pi pi-send"></button>
+                      <button pButton (click)="onOpenModal('consignment-withdrawal', account)" pRipple label="CONS/WDRL" icon="pi pi-dollar"></button>
+                    </span>
+                  </td>
+              </tr>
+          </ng-template>
+        </p-table>
+    </div>
+ </div>
+
+<div class="modal fade" id="addAccountModal" tabindex="-1" role="dialog" aria-labelledby="addAccountModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="addAccountModalLabel">Create Account</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <form #addForm="ngForm" (ngSubmit)="onAddAccount(addForm)">
+                <div class="form-group">
+                    <label for="accountType">Account Type</label>
+                    <div class="check-boxes">
+                      <input type="radio" ngModel name="accountType" value="Saving" class="boxes-margin" id="accountType" required>Saving
+                      <input type="radio" ngModel name="accountType" value="Checking" class="boxes-margin" id="accountType" required>Checking
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="nontaxable">Tax Free</label>
+                    <div class="check-boxes">
+                      <input type="radio" ngModel name="nontaxable" value="no" class="boxes-margin" id="nontaxable" required>No
+                    <input type="radio" ngModel name="nontaxable" value="yes" class="boxes-margin" id="nontaxable" required>Yes
+                    </div>
+                </div>
+                <div class="form-group">
+                  <label for="balance">Balance</label>
+                  <input type="number" ngModel name="balance" class="form-control" id="balance" placeholder="Balance" required>
+                </div>
+                <div class="modal-footer">
+                   <button pButton type="button" label="Cancel" class="p-button-danger" id="add-account-form" data-dismiss="modal"></button>
+                   <button pButton type="submit" label="Create" class="p-button-success"  [disabled]="addForm.invalid"></button>
+                </div>
+            </form>
+         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="updateAccountModal" tabindex="-1" role="dialog" aria-labelledby="accountEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+       <div class="modal-content">
+          <div class="modal-header">
+             <h5 class="modal-title" id="updateAccountModalLabel">Update Account</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+             </button>
+          </div>
+          <div class="modal-body">
+             <form #editForm="ngForm">
+                <div class="form-group">
+                   <label for="name">Account Number</label>
+                   <input [disabled]="true" type="text" ngModel="{{updateAccount?.accountNumber}}" name="accountNumber" class="form-control" id="accountNumber" aria-describedby="emailHelp" placeholder="Account Number">
+                </div>
+                <div class="form-group">
+                  <label for="accountType">Account Type</label>
+                  <input [disabled]="true" type="text" ngModel="{{updateAccount?.accountType}}" name="accountType" class="form-control" id="accountType" placeholder="Account Type" required>
+                </div>
+                <div class="form-group">
+                  <label for="accountStatus">Account Status</label>
+                  <div class="radio-bottoms">
+                    <input type="radio" ngModel="{{updateAccount?.accountStatus}}" name="accountStatus" value="Active" class="boxes-margin" id="accountStatus" required>Active
+                    <input type="radio" ngModel="{{updateAccount?.accountStatus}}" name="accountStatus" value="Inactive" class="boxes-margin" id="accountStatus" required>Inactive
+                    <input type="radio" ngModel="{{updateAccount?.accountStatus}}" name="accountStatus" value="Cancelled" class="boxes-margin" id="accountStatus" required>Cancelled
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="balance">Balance</label>
+                  <input [disabled]="true" type="number" ngModel="{{updateAccount?.balance}}" name="balance" class="form-control" id="balance" placeholder="Balance" required>
+                </div>
+                <div class="form-group">
+                  <label for="availableBalance">Available Balance</label>
+                  <input [disabled]="true" type="number" ngModel="{{updateAccount?.availableBalance}}" name="availableBalance" class="form-control" id="availableBalance" placeholder="Available Balance" required>
+                </div>
+                <div class="form-group">
+                  <label for="nontaxable">Nontaxable</label>
+                  <div class="check-boxes">
+                    <input [disabled]="true" type="radio" ngModel="{{updateAccount?.nontaxable}}" name="nontaxable" value="no" class="boxes-margin" id="nontaxable" required>No
+                    <input [disabled]="true" type="radio" ngModel="{{updateAccount?.nontaxable}}" name="nontaxable" value="yes" class="boxes-margin" id="nontaxable" required>Yes
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="creationDate">Creation Date</label>
+                  <input type="date" ngModel="{{updateAccount?.creationDate}}" name="creationDate" class="form-control" id="creationDate" required>
+                </div>
+                <div class="modal-footer">
+                   <button pButton type="button" label="Close" class="p-button-danger" id="" data-dismiss="modal"></button>
+                   <button (click)="onUpdateAccount(editForm.value)" data-dismiss="modal" pButton type="button" label="Save" class="p-button-success"></button>
+                </div>
+             </form>
+          </div>
+       </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="addConsWdrlModal" tabindex="-1" role="dialog" aria-labelledby="addConsWdrlModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="addConsWdrlModalLabel">Make a Movement</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <form #consWdrlForm="ngForm" (ngSubmit)="onAddConsWdrl(consWdrlForm)">
+                <div class="form-group">
+                    <label for="accountNumber">Account Number</label>
+                    <input type="text" [disabled]="true" ngModel="{{movementAccount?.accountNumber}}" name="accountNumber" class="form-control" id="accountNumber">
+                </div>
+                <div class="form-group">
+                    <label for="transactionType">Transaction Type</label>
+                    <div class="check-boxes">
+                      <input type="radio" ngModel name="transactionType" value="consignment" class="boxes-margin" id="transactionType" required>Consignment
+                      <input type="radio" ngModel name="transactionType" value="withdrawal" class="boxes-margin" id="transactionType" required>Withdrawal
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="value">Transaction Value</label>
+                    <input type="number" ngModel name="value" class="form-control" id="value" placeholder="Amount" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" ngModel name="description" class="form-control" id="description" placeholder="Add a description...">
+                </div>
+                <div class="modal-footer">
+                   <button pButton type="button" label="Cancel" class="p-button-danger" id="add-cons-wdrl-form" data-dismiss="modal"></button>
+                   <button pButton type="submit" label="Done" class="p-button-success" [disabled]="consWdrlForm.invalid"></button>
+                </div>
+            </form>
+         </div>
+      </div>
+    </div>
+  </div>
+
+<div class="modal fade" id="addTransferModal" tabindex="-1" role="dialog" aria-labelledby="addTransferModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addTransferModalLabel">Make a Transfer</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #transferForm="ngForm" (ngSubmit)="onAddTransfer(transferForm)">
+          <div class="form-group">
+            <label for="accountNumber">Account Number</label>
+            <input type="text" [disabled]="true" ngModel="{{movementAccount?.accountNumber}}" name="accountNumber"
+              class="form-control" id="accountNumber">
+          </div>
+          <div class="form-group">
+            <label for="transferAccount">Transfer to</label>
+            <input type="text" ngModel name="transferAccount" class="form-control" id="transferAccount"
+              placeholder="Add an Account Number">
+          </div>
+          <div class="form-group">
+            <label for="value">Transaction Value</label>
+            <input type="number" ngModel name="value" class="form-control" id="value" placeholder="Amount to consign..."
+              required>
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" ngModel name="description" class="form-control" id="description"
+              placeholder="Add a description...">
+          </div>
+
+
+          <div class="modal-footer">
+            <button pButton type="button" label="Cancel" class="p-button-danger" id="add-transfer-form" data-dismiss="modal"></button>
+            <button pButton type="submit" label="Done" class="p-button-success"  [disabled]="transferForm.invalid"></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
