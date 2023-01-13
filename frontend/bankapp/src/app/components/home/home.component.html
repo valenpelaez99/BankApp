@@ -1,1 +1,36 @@
-<p>home works!</p>
+<app-header></app-header>
+
+<br>
+<div>
+
+    <p-carousel [value]="images" styleClass="custom-carousel" [numVisible]="3" [numScroll]="4" [circular]="true"
+        [autoplayInterval]="5000" [responsiveOptions]="responsiveOptions">
+        <ng-template pTemplate="header">
+        </ng-template>
+        <ng-template let-image pTemplate="item">
+            <p-card [style]="{width: '300px'}">
+                <ng-template pTemplate="header">
+                    <img alt="Card" src="{{image}}">
+                </ng-template>
+            </p-card>
+        </ng-template>
+    </p-carousel>
+
+    <div style="margin: 5%;">
+
+        <p>
+            To begin with, this app will allow the customers' management, which includes the customer registration,
+            information updates, and deleting accounts.
+
+            Secondly It'll also allow to create financial products to its customers.
+
+            Finally, the app will allow us to do transcational movements and check the accounts status for all these
+            financial products.
+
+        </p>
+
+    </div>
+
+    <br>
+
+</div>
