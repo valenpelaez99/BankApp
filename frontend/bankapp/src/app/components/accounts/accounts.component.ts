@@ -35,7 +35,6 @@ export class AccountsComponent implements OnInit{
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.id = +params.get('idClient')!
     })
-    //const id = this.route.snapshot.paramMap.get('idClient')!;
     this.getAccountsByClientId(this.id);
 
   }
@@ -57,12 +56,12 @@ export class AccountsComponent implements OnInit{
       {
         next:(response: Account) => {
           console.log(response);
-          alert('Account Created')
+          alert('Created')
           location.reload();
           addForm.reset();
         },
         error:() => {
-          alert('Please try again');
+          alert('Try again');
           addForm.reset();
         }
       });
@@ -74,11 +73,11 @@ export class AccountsComponent implements OnInit{
     this.accountService.updateAccount(this.updateAccount!).subscribe({
       next:(response: Account) => {
         console.log(response);
-        alert('Account Updated')
+        alert('Updated')
         this.getAccountsByClientId(this.id);
       },
       error:() => {
-        alert('Cannot Cancel this account: Available Balance must be 0')
+        alert('Available Balance must be 0')
       }
     });
   }
@@ -97,13 +96,12 @@ export class AccountsComponent implements OnInit{
       {
         next:(response: Transaction) => {
           console.log(response);
-          alert('Successfull consignment');
+          alert('Successfull');
           location.reload();
           consWdrlForm.reset();
         },
         error:() => {
           alert('The account must be activated');
-          alert('Failed consignment');
           consWdrlForm.reset();
         }
       });
@@ -119,13 +117,12 @@ export class AccountsComponent implements OnInit{
       {
         next:(response: Transaction) => {
           console.log(response);
-          alert('Successfull transfer');
+          alert('Successfull');
           location.reload();
           transferForm.reset();
         },
         error:() => {
-          alert('Failed transfer');
-          alert('Please check if the account is activate, the Receiver Account Number or the funds on this account')
+          alert('Please check if the account is activate')
           transferForm.reset();
         }
       });

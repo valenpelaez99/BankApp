@@ -39,12 +39,12 @@ export class ClientsComponent implements OnInit{
       {
         next:(response: Client) => {
           console.log(response);
-          alert('Client Created')
+          alert('Created')
           this.getClients();
           addForm.reset();
         },
         error:() => { 
-          alert('Client already exists or It is underage.');
+          alert('Please check if your Client already exists or it is underage');
           addForm.reset();
         }
       });
@@ -68,11 +68,11 @@ export class ClientsComponent implements OnInit{
     this.clientService.deleteClient(clientId).subscribe({
       next:(response: void) => {
         console.log(response);
-        alert('Client Deleted')
+        alert('Deleted')
         this.getClients();
       },
       error:() => {
-        alert('This client can not be deleted ... Check the status of the accounts!')
+        alert('Check the status of the accounts')
       }
     });
   }
